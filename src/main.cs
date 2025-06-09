@@ -8,35 +8,23 @@ using System.Text;
 internal static class Program
 {
     private static string[] _paths = [];
-    private static bool _isInteractive = false;
 
     public static void Main(string[] args)
     {
         //_paths = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator) ?? Array.Empty<string>();
-        _paths = Environment.GetEnvironmentVariable("PATH")?.Split(':') ?? Array.Empty<string>();
+        //_paths = Environment.GetEnvironmentVariable("PATH")?.Split(':') ?? Array.Empty<string>();
+        _paths = Environment.GetEnvironmentVariable("PATH")?.Split(':') ?? [];
 
-        if (args.Length > 0)
+        // start REPL (Read-Eval-Print Loop)
+        while (true)
         {
-            // Non-interactive mode: treat args as command
-            var commandLine = string.Join(' ', args);
-            RunCommand(commandLine);
-        }
-        else
-        {
-            // Interactive mode: start REPL (Read-Eval-Print Loop)
-            _isInteractive = true;
-            while (true)
-            {
-                Repl();
-            }
+            Repl();
         }
     }
 
     private static void Repl()
     {
-        if (_isInteractive)
-            Console.Write("$ ");
-
+        Console.Write("$ ");
         var userInput = Console.ReadLine();
         RunCommand(userInput);
     }
@@ -109,94 +97,3 @@ internal static class Program
         Environment.Exit(0); // Default exit code if not specified or invalid
     }
 }
-
-//using System.Diagnostics;
-//using System.Diagnostics.Tracing;
-//using System.Net;
-//using System.Net.Sockets;
-//using System.Runtime.CompilerServices;
-
-//var BUILTINS = new HashSet<string> 
-//{
-//    "exit", "echo", "type"
-//};
-
-//var PATHS = Environment.GetEnvironmentVariable("PATH")?.Split(":") ?? [];
-
-//// REPL (Read-Eval-Print Loop) for a simple command line interface
-//while (true)
-//{
-//    Console.Write("$ ");
-//    string? command = Console.ReadLine();
-
-//    if (string.IsNullOrEmpty(command))
-//    {
-//        continue;
-//    }
-
-//    // If user input is exit, we exit the program with a status code
-//    else if (command.Split(" ")[0].ToLower() == "exit")
-//    {
-//        Environment.Exit(int.Parse(command.Split(" ")[1]));
-//    }
-
-//    // If user input is echo, we print the rest of the comman
-//    else if (command.ToLower().StartsWith("echo") == true)
-//    {
-//        Console.WriteLine(command[5..]);
-//    }
-
-//    else if(command.ToLower().StartsWith("type") == true)
-//    {
-//        string commandType = command.Split(" ")[1].ToLower();
-
-//        if (BUILTINS.Contains(commandType))
-//        {
-//            Console.WriteLine($"{commandType} is a shell builtin");
-//            continue;
-//        }
-
-//        // Check if the command exists in the PATH environment variable
-//        bool isFound = false;
-//        foreach (var path in PATHS)
-//        {
-//            var fullPath = Path.Join(path, commandType);
-
-//            if (File.Exists(fullPath)) {
-//                Console.WriteLine($"{commandType} is {fullPath}");
-//                isFound = true;
-//                break;
-//            }
-//        }
-
-//        if (!isFound)
-//        {
-//            Console.WriteLine($"{commandType}: not found");
-//        }
-//    }
-
-//    else if (ExecutableInPath(BUILTINS, out var location))
-//    {
-//        Process.Start(location, string.Join(' ', command[1..]));
-//    }
-
-//    else
-//    {
-//        Console.WriteLine($"{command}: command not found");
-//    }
-
-
-//    static bool ExecutableInPath(string arguments, out string location)
-//    {
-//        location = string.Empty;
-//        foreach (var path in PATHS)
-//        {
-//            if (File.Exists($"{path}/{arguments}"))
-//            {
-//                location = path + "/" + arguments;
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//}

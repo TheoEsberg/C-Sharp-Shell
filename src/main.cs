@@ -24,7 +24,9 @@ internal static class Program
 
     private static void Repl()
     {
-        Console.Write("$ ");
+        if (!Console.IsInputRedirected)
+            Console.Write("$ ");
+            
         var userInput = Console.ReadLine();
         RunCommand(userInput);
     }

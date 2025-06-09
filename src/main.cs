@@ -56,19 +56,7 @@ internal static class Program
         else if (builtin == "type")
             Type(command);
         else if (ExecutableInPath(builtin, out var location))
-        {
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = location,
-                Arguments = string.Join(' ', command[1..]),
-                RedirectStandardOutput = false,
-                UseShellExecute = false,
-                CreateNoWindow = false,
-            };
-            var process = new Process { StartInfo = startInfo };
-            process.Start();
-            //Process.Start(location, string.Join(' ', command[1..]));
-        }
+            Process.Start(location, string.Join(' ', command[1..]));
         else
             Console.WriteLine($"{userInput}: command not found");
     }
@@ -93,13 +81,12 @@ internal static class Program
 
     private static bool ExecutableInPath(string arguments, out string location)
     {
-        location = string.Empty;
+        location = "";
         foreach (var path in _paths)
         {
-            var fullPath = Path.Combine(path, arguments);
-            if (File.Exists(fullPath))
+            if (File.Exists($"{path}/{arguments}"))
             {
-                location = fullPath;
+                location = path + "/" + arguments;
                 return true;
             }
         }

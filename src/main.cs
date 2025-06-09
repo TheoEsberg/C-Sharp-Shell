@@ -70,13 +70,19 @@ internal static class Program
                         {
                             Console.WriteLine(Environment.CurrentDirectory);
                             return;
+                        } else if (Args[0] == "~")
+                        {
+                            Directory.SetCurrentDirectory(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+                            return;
                         }
+
+
                         string newPath = Args[0];
                         try
                         {
                             Directory.SetCurrentDirectory(newPath);
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             Console.WriteLine($"cd: {Args[0]}: No such file or directory");
                         }

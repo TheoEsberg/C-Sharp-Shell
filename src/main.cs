@@ -8,31 +8,33 @@ using System.Text;
 internal static class Program
 {
     private static string[] _paths = [];
+    private static bool _isInteractive = false;
 
     public static void Main(string[] args)
     {
         //_paths = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator) ?? Array.Empty<string>();
         //_paths = Environment.GetEnvironmentVariable("PATH")?.Split(':') ?? Array.Empty<string>();
         _paths = Environment.GetEnvironmentVariable("PATH")?.Split(':') ?? [];
-        var isInteractive = args.Length == 0;
+        _isInteractive = args.Length == 0;
 
-        if (!isInteractive)
+        if (!_isInteractive)
         {
             // If arguments are provided, run the command directly
             RunCommand(string.Join(' ', args));
-        } else
+        } 
+        else
         {
             // start REPL (Read-Eval-Print Loop)
             while (true)
             {
-                Repl(isInteractive);
+                Repl();
             }
         }
     }
 
-    private static void Repl(bool isInteractive)
+    private static void Repl()
     {
-        if (isInteractive)
+        if (_isInteractive)
             Console.Write("$ ");
             
         var userInput = Console.ReadLine();

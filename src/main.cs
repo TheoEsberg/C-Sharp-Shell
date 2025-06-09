@@ -23,6 +23,7 @@ internal static class Program
         else
         {
             // Interactive mode: start REPL (Read-Eval-Print Loop)
+            _isInteractive = true;
             while (true)
             {
                 Repl();

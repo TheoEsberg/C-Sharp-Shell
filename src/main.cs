@@ -61,7 +61,7 @@ internal static class Program
         {
             var startInfo = new ProcessStartInfo
             {
-                FileName = location,
+                FileName = command[0],
                 Arguments = string.Join(' ', command[1..]),
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,

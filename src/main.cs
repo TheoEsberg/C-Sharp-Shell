@@ -6,8 +6,10 @@ using System.Runtime.CompilerServices;
 
 var BUILTINS = new HashSet<string> 
 {
-    "exit", "echo", "type", "ls"
+    "exit", "echo", "type"
 };
+
+var PATHS = (Environment.GetEnvironmentVariable("PATH") ?? "").Split(":");
 
 // REPL (Read-Eval-Print Loop) for a simple command line interface
 while (true)
@@ -35,19 +37,30 @@ while (true)
     else if(command.ToLower().StartsWith("type") == true)
     {
         string commandType = command.Split(" ")[1].ToLower();
+
         if (BUILTINS.Contains(commandType))
         {
-            Console.WriteLine($"{commandType} is {GetCurrentPath()}");
+            Console.WriteLine($"{commandType} is a shell builtin");
+            continue;
         }
-        else
+
+        // Check if the command exists in the PATH environment variable
+        bool isFound = false;
+        foreach (var path in PATHS)
+        {
+            var fullPath = Path.Join(path, commandType);
+
+            if (File.Exists(fullPath)) {
+                Console.Write($"{commandType} is {fullPath}");
+                isFound = true;
+                break;
+            }
+        }
+
+        if (!isFound)
         {
             Console.WriteLine($"{commandType}: not found");
         }
-    }
-
-    else if (command.ToLower().StartsWith("ls") == true)
-    {
-        Console.WriteLine(GetCurrentPath());
     }
 
     else
@@ -55,10 +68,4 @@ while (true)
         Console.WriteLine($"{command}: command not found");
     }
 }
-
-string GetCurrentPath()
-{
-    return Directory.GetCurrentDirectory();
-}
-
 

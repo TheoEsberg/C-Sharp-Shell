@@ -12,18 +12,32 @@ internal static class Program
     public static void Main(string[] args)
     {
         _paths = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator) ?? Array.Empty<string>();
-        while (true)
+
+        if (args.Length > 0)
         {
-            Repl();
+            // Non-interactive mode: treat args as command
+            var commandLine = string.Join(' ', args);
+            RunCommand(commandLine);
+        }
+        else
+        {
+            // Interactive mode: start REPL (Read-Eval-Print Loop)
+            while (true)
+            {
+                Repl();
+            }
         }
     }
 
     private static void Repl()
     {
         Console.Write("$ ");
-
         var userInput = Console.ReadLine();
+        RunCommand(userInput);
+    }
 
+    private static void RunCommand(string? userInput)
+    {
         if (string.IsNullOrEmpty(userInput))
         {
             return;
@@ -41,9 +55,7 @@ internal static class Program
         else if (ExecutableInPath(builtin, out var location))
             Process.Start(location, string.Join(' ', command[1..]));
         else
-        {
-             Console.WriteLine($"{userInput}: command not found");
-        }
+            Console.WriteLine($"{userInput}: command not found");
     }
 
     private static void Type(string[] command)

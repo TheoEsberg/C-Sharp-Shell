@@ -78,7 +78,7 @@ internal static class Program
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine($"cd: {ex.Message}");
+                            Console.WriteLine($"cd: Could not find a part of the path '{Args[0]}'");
                         }
                     };
                     return;

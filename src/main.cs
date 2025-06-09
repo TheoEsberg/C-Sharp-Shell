@@ -4,14 +4,13 @@ using System.Net.Sockets;
 while (true)
 {
     Console.Write("$ ");
-    String? input = Console.ReadLine()?.Trim();
+    var command = Console.ReadLine();
 
-    if (string.IsNullOrEmpty(input) || input.Equals("exit", StringComparison.CurrentCultureIgnoreCase))
+    if (command!.Split(" ")[0] == "exit")
     {
-        Console.WriteLine(0);
-        break;
+        Environment.Exit(int.Parse(command.Split(" ")[1]));
     }
 
-    Console.WriteLine($"{input}: command not found");
+    Console.WriteLine($"{command}: command not found");
 }
 

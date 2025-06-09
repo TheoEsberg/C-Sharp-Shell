@@ -8,6 +8,7 @@ while (true)
 
     if (string.IsNullOrEmpty(input) || input.Equals("exit", StringComparison.CurrentCultureIgnoreCase))
     {
+        Console.WriteLine(0);
         break;
     }
 

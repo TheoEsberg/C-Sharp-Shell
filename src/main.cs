@@ -25,14 +25,14 @@ internal static class Program
             // start REPL (Read-Eval-Print Loop)
             while (true)
             {
-                Repl();
+                Repl(isInteractive);
             }
         }
     }
 
-    private static void Repl()
+    private static void Repl(bool isInteractive)
     {
-        if (!Console.IsInputRedirected)
+        if (isInteractive)
             Console.Write("$ ");
             
         var userInput = Console.ReadLine();

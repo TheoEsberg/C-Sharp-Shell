@@ -14,11 +14,19 @@ internal static class Program
         //_paths = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator) ?? Array.Empty<string>();
         //_paths = Environment.GetEnvironmentVariable("PATH")?.Split(':') ?? Array.Empty<string>();
         _paths = Environment.GetEnvironmentVariable("PATH")?.Split(':') ?? [];
+        var isInteractive = args.Length == 0;
 
-        // start REPL (Read-Eval-Print Loop)
-        while (true)
+        if (!isInteractive)
         {
-            Repl();
+            // If arguments are provided, run the command directly
+            RunCommand(string.Join(' ', args));
+        } else
+        {
+            // start REPL (Read-Eval-Print Loop)
+            while (true)
+            {
+                Repl();
+            }
         }
     }
 

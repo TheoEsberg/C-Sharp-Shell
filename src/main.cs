@@ -6,10 +6,10 @@ while (true)
     Console.Write("$ ");
     String? input = Console.ReadLine()?.Trim();
 
-    //if (string.IsNullOrEmpty(input) || input.ToLower() == "exit")
-    //{
-    //    break;
-    //}
+    if (string.IsNullOrEmpty(input) || input.Equals("exit", StringComparison.CurrentCultureIgnoreCase))
+    {
+        break;
+    }
 
     Console.WriteLine($"{input}: command not found");
 }

@@ -58,7 +58,27 @@ internal static class Program
         else if (builtin == "type")
             Type(command);
         else if (ExecutableInPath(builtin, out var location))
-            Process.Start(location, string.Join(' ', command[1..]));
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = location,
+                Arguments = string.Join(' ', command[1..]),
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
+
+            var process = new Process { StartInfo = startInfo };
+            process.Start();
+
+            // Print stdout
+            Console.Write(process.StandardOutput.ReadToEnd());
+            Console.Error.Write(process.StandardError.ReadToEnd());
+
+            process.WaitForExit();
+            //Process.Start(location, string.Join(' ', command[1..]));
+        }
         else
             Console.WriteLine($"{userInput}: command not found");
     }

@@ -11,6 +11,12 @@ while (true)
         Environment.Exit(int.Parse(command.Split(" ")[1]));
     }
 
+    if (command!.Split(" ")[0] == "echo")
+    {
+        var response = command.Replace("echo", "").Trim();
+        Console.WriteLine(response);
+    }
+
     Console.WriteLine($"{command}: command not found");
 }
 

@@ -12,7 +12,8 @@ internal static class Program
 
     public static void Main(string[] args)
     {
-        _paths = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator) ?? Array.Empty<string>();
+        //_paths = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator) ?? Array.Empty<string>();
+        _paths = Environment.GetEnvironmentVariable("PATH")?.Split(':') ?? Array.Empty<string>();
 
         if (args.Length > 0)
         {

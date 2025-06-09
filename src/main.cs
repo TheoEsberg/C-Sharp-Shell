@@ -8,7 +8,7 @@ using System.Text;
 internal static class Program
 {
     private static string[] _paths = [];
-    private static bool IsInteractive => Console.IsInputRedirected == false;
+    private static bool _isInteractive = false;
 
     public static void Main(string[] args)
     {
@@ -32,7 +32,7 @@ internal static class Program
 
     private static void Repl()
     {
-        if (IsInteractive)
+        if (_isInteractive)
             Console.Write("$ ");
 
         var userInput = Console.ReadLine();

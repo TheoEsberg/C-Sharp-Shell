@@ -1,12 +1,16 @@
 using System.Net;
 using System.Net.Sockets;
 
-
-// Wait for user input
 while (true)
 {
     Console.Write("$ ");
-    var command = Console.ReadLine();
-    Console.WriteLine($"{command}: command not found");
+    String? input = Console.ReadLine()?.Trim();
+
+    //if (string.IsNullOrEmpty(input) || input.ToLower() == "exit")
+    //{
+    //    break;
+    //}
+
+    Console.WriteLine($"{input}: command not found");
 }
 

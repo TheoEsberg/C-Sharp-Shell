@@ -51,7 +51,7 @@ while (true)
             var fullPath = Path.Join(path, commandType);
 
             if (File.Exists(fullPath)) {
-                Console.Write($"{commandType} is {fullPath}");
+                Console.WriteLine($"{commandType} is {fullPath}");
                 isFound = true;
                 break;
             }

@@ -1,11 +1,12 @@
 using System.Diagnostics.Tracing;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 
 
-List<string> Types = new List<string>()
+var BUILTINS = new HashSet<string> 
 {
-    "exit", "echo", "type"
+    "exit", "echo", "type", "ls"
 };
 
 // REPL (Read-Eval-Print Loop) for a simple command line interface
@@ -33,10 +34,10 @@ while (true)
 
     else if(command.ToLower().StartsWith("type") == true)
     {
-        string commandType = command.Split(" ")[1];
-        if (Types.Contains(commandType.ToLower()))
+        string commandType = command.Split(" ")[1].ToLower();
+        if (BUILTINS.Contains(commandType))
         {
-            Console.WriteLine($"{commandType} is a shell builtin");
+            Console.WriteLine($"{commandType} is {GetCurrentPath()}");
         }
         else
         {
@@ -44,8 +45,20 @@ while (true)
         }
     }
 
-    else {
+    else if (command.ToLower().StartsWith("ls") == true)
+    {
+        Console.WriteLine(GetCurrentPath());
+    }
+
+    else
+    {
         Console.WriteLine($"{command}: command not found");
     }
 }
+
+string GetCurrentPath()
+{
+    return Directory.GetCurrentDirectory();
+}
+
 

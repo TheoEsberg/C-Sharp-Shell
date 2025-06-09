@@ -78,7 +78,7 @@ internal static class Program
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine($"cd: Could not find a part of the path '{Args[0]}'");
+                            Console.WriteLine($"cd: {Args[0]}: No such file or directory");
                         }
                     };
                     return;
